@@ -1,0 +1,134 @@
+{
+  "0": {
+    "tokens": "<s>",
+    "predictions": "O"
+  },
+  "1": {
+    "tokens": "Bệnh",
+    "predictions": "O"
+  },
+  "2": {
+    "tokens": "nhân",
+    "predictions": "O"
+  },
+  "3": {
+    "tokens": "nữ",
+    "predictions": "B-GENDER"
+  },
+  "4": {
+    "tokens": "số",
+    "predictions": "O"
+  },
+  "5": {
+    "tokens": "90",
+    "predictions": "B-PATIENT_ID"
+  },
+  "6": {
+    "tokens": ",",
+    "predictions": "O"
+  },
+  "7": {
+    "tokens": "30",
+    "predictions": "B-AGE"
+  },
+  "8": {
+    "tokens": "tuổi",
+    "predictions": "O"
+  },
+  "9": {
+    "tokens": "là",
+    "predictions": "O"
+  },
+  "10": {
+    "tokens": "một",
+    "predictions": "O"
+  },
+  "11": {
+    "tokens": "bán",
+    "predictions": "O"
+  },
+  "12": {
+    "tokens": "bảo",
+    "predictions": "O"
+  },
+  "13": {
+    "tokens": "hiểm",
+    "predictions": "O"
+  },
+  "14": {
+    "tokens": "tại",
+    "predictions": "O"
+  },
+  "15": {
+    "tokens": "Công_ty",
+    "predictions": "B-ORGANIZATION"
+  },
+  "16": {
+    "tokens": "Samsung",
+    "predictions": "I-ORGANIZATION"
+  },
+  "17": {
+    "tokens": "có",
+    "predictions": "O"
+  },
+  "18": {
+    "tokens": "dấu",
+    "predictions": "O"
+  },
+  "19": {
+    "tokens": "hiệu",
+    "predictions": "O"
+  },
+  "20": {
+    "tokens": "suy",
+    "predictions": "B-SYMPTOM_AND_DISEASE"
+  },
+  "21": {
+    "tokens": "hô",
+    "predictions": "I-SYMPTOM_AND_DISEASE"
+  },
+  "22": {
+    "tokens": "hấp",
+    "predictions": "I-SYMPTOM_AND_DISEASE"
+  },
+  "23": {
+    "tokens": ",",
+    "predictions": "O"
+  },
+  "24": {
+    "tokens": "đang",
+    "predictions": "O"
+  },
+  "25": {
+    "tokens": "được",
+    "predictions": "O"
+  },
+  "26": {
+    "tokens": "điều",
+    "predictions": "O"
+  },
+  "27": {
+    "tokens": "trị",
+    "predictions": "O"
+  },
+  "28": {
+    "tokens": "tại",
+    "predictions": "O"
+  },
+  "29": {
+    "tokens": "bệnh",
+    "predictions": "B-LOCATION"
+  },
+  "30": {
+    "tokens": "viện",
+    "predictions": "I-LOCATION"
+  },
+  "31": {
+    "tokens": "Chợ_Rẫy",
+    "predictions": "I-LOCATION"
+  },
+  "32": {
+    "tokens": "</s>",
+    "predictions": "O"
+  }
+}
