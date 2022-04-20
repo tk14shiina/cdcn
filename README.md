@@ -1,2 +1,3 @@
 # cdcn
  
+npm start
