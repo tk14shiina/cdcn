@@ -8,6 +8,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import { TextField } from '@mui/material';
 const patient_id = "#5400d9";
 const name = "#6a5608";
 const age = "#a2f48a";
@@ -21,57 +22,65 @@ const transportation ="#e4b84a";
 function App(){
 	const [selectedFile, setSelectedFile] = useState();
 	const [isFilePicked, setIsFilePicked] = useState(false);
-	const [isFileSubmited, setIsFileSubmited] = useState(false);
-	const [jsonText, setJsonText] = useState({});
+	const [inputOCR, setInputOCR] = useState('Input rỗng');
+	const [inputSubmitted, setInputSubmitted] = useState(false);
+	const [outputNER, setOutputNER] = useState();
 	const handleClearOutput = () => {
+		let newFormData = new FormData();
+		formData = newFormData;
 		setIsFilePicked(false);
-		setIsFileSubmited(false);
+		setInputOCR('Input rỗng');
+		setOutputNER();
+		setInputSubmitted(false);
 	};
 	let formData = new FormData();
 	const handleSelectedFile = (event) => {
 		setSelectedFile(event.target.files[0]);
 		setIsFilePicked(true);
+	};
+	const handleOCRSubmission = () => {
 		
-		console.log(event.target.files)
-
+		console.log(selectedFile);
+		const formData = new FormData();
 		formData.append('file', selectedFile);
-
 		fetch(
-			'http://172.20.10.5:8000/ocr/file_upload',
+			'http://oner.buzzle.works:8000/OCR/file_upload',
 			{
 				method: 'POST',
-				body: formData,
+				body: formData
 			}
 		)
 			.then((response) => response.json())
 			.then((result) => {
-				console.log('Success:', result);
+				let tempResult = '';
+				result.map(i => (
+					i.confidence > 80 ? 
+						tempResult += i.text : tempResult));
+				console.log(tempResult);
+				setInputOCR(tempResult);
 			})
 			.catch((error) => {
 				console.error('Error:', error);
-			});
+			});	
 	};
-
-	const handleSubmission = () => {
-		setIsFileSubmited(true);
-		/*jsonText = {one: "two", three: "four"};*/
-		
+	const handleNERSubmission = () => {
+		setInputSubmitted(true);
 		fetch(
-			'https://catfact.ninja/fact',
+			'http://oner.buzzle.works:8000/NER/file_upload',
 			{
-				method: 'GET',
+				method: 'POST',
+				body: inputOCR
 			}
 		)
 			.then((response) => response.json())
 			.then((result) => {
-				console.log('Success:', result);
-				setJsonText(result);
+				setOutputNER(result);
 			})
 			.catch((error) => {
 				console.error('Error:', error);
-			});
-	};
+			});		
 
+	};
 	return(
    		<div>
 			<Grid container spacing={2} columns={{ xs: 4, sm: 8, md: 16 }}>
@@ -80,24 +89,34 @@ function App(){
 					<input type="file" name="file" onChange={handleSelectedFile} />
 					{isFilePicked ? (
 						<div>
-							<p>Filetype: {selectedFile.type}</p>
+							<p></p>
 						</div>
 					) : (
 						<p>Select a file to show details</p>
 					)}
-					<div>{isFileSubmited?(<div>{jsonText.fact}</div>):(<div>Chưa submit</div>)}</div>
 				</Grid>
 				<Grid item xs={2} sm={4} md={8}>
-					<button onClick={handleSubmission}>Submit	</button>
+					<button onClick={handleOCRSubmission}>Submit OCR</button>
+				</Grid>
+				
+				
+				<Grid item xs={2} sm={4} md={8}>
+					<form>
+        				<input
+          				type="text" 
+          				value={inputOCR}
+          				onChange={(e) => setInputOCR(e.target.value)}
+        				/>
+    				</form>
 				</Grid>
 				<Grid item xs={2} sm={4} md={8}>
-					<button onClick={handleClearOutput}>Clear output</button>
+					<button onClick={handleNERSubmission}>Submit NER</button>
 				</Grid>
-				<div>{isFileSubmited ? (
-				<Grid item xs={2} sm={4} md={8} >
+				<div>{inputSubmitted ? (
+				<Grid item xs={2} sm={4} md={8}>
 					<Box style={{border: "1px solid grey", wordWrap: "break-word", maxWidth: "900px", padding: "18px 18px"}}>
 					{
-						Object.values(test).map(i => 
+						outputNER.map(i => 
 						<Switch condition={i.predictions.substring(2)}>
 							<Case value={'PATIENT_ID'}>
 								<span style={{ color: patient_id }}> {i.tokens.replace('_', ' ')}</span>
@@ -135,7 +154,10 @@ function App(){
 						</Switch>)
 					}
 					</Box>
-				</Grid>) : (<div>Chưa có nội dung</div>)}</div>
+				</Grid>) : (<div>Chưa có kết quả</div>)}</div>
+				<Grid item xs={2} sm={4} md={8}>
+					<button onClick={handleClearOutput}>Clear output</button>
+				</Grid>
 			</Grid>
 			<Grid item> 
 			<Box
